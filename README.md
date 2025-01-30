@@ -1,6 +1,6 @@
 # Diploma_Thesis_2025 - Georgios Giosmas
 
-## "Title"
+## "AI ALGORITHMS’ HARDWARE ACCELERATION STUDY ON ARCHITECTURES BASED ON XILINX’ DPU PROCESSING MODULE"
 
 In this diploma thesis we examine a Computer Vision problem. We try to implement an algorithm for wind turbine surface damage detection and then accelerate it on an FPGA. Wind turbine surface damage detection is considered a high risk and high cost procedure as it is time consuming and exposes humans into difficult situations.  Solving the problem with Computer Vision techniques, like Convolutional Neural Networks, has been proven an efficient approach reducing time and achieving high accuracy.
 
@@ -30,7 +30,7 @@ For inference on ZCU4 is deemed necessary to process our trained model according
 
 [Model's Graph](graph.png) contains the CPU and DPU subgraphs in which the Vitis AI Compiler split our model.
 
-Inference on ZCU4 is finally achieved using VART from Vitis AI by running either one of the two scripts [dpu_configuration.py](dpu_configuration.py) and [dpu_configuration_1_DPU.py](dpu_configuration_1_DPU.py). First we configure the FPGA by loading only one DPU and then by loading two DPUs. The DPU architecture available for ZCU4 boards is a DPUCZDX8G DPU.
+Inference on ZCU4 is finally achieved using VART from Vitis AI by running either one of the two scripts [dpu_configuration.py](dpu_configuration.py) and [dpu_configuration_1_DPU.py](dpu_configuration_1_DPU.py). First we configure the FPGA by loading only one DPU(threads=1) and then by loading two DPUs(threads=2). The DPU architecture available for ZCU4 boards is a DPUCZDX8G DPU.
 
 Performance on the validation dataset when run on the ZCU4:
 
@@ -41,11 +41,15 @@ Inference on the ZCU4:
 ![Inference on ZCU4](images/DPU_inference.jpg)
 
 ## Inference on Raspberry Pi
+We also evaluate the performance of our algorithm in Raspberry Pi 3.
 
+Inference on Raspberry Pi 3:
+
+![Inference on Raspberry Pi 3](Inference_on_CPU/Raspberry_inference.jpg)
 
 ## Experimental Results
 
-Results indicate a slight decrease in inference speed accompanied with huge increases in both Pre-processing and NMS times in FPGA's Inference. The Average Time, the time each model format needed to process all images from the validation dataset, is displayed below:
+Results indicate that acceleration on FPGA didn't provide satisfactory results, as it didn't exceed the performance of our PC.
 
 
 
