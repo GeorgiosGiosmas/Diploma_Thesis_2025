@@ -38,7 +38,7 @@ Performance on the validation dataset when run on the ZCU4:
 
 Inference on the ZCU4:
 
-![Inference on ZCU4](images/DPU_inference.jpg)
+![Inference on ZCU4](images/DPU_inference.jp)
 
 ## Inference on Raspberry Pi
 We also evaluate the performance of our algorithm in Raspberry Pi 3.
