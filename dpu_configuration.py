@@ -44,10 +44,9 @@ def preprocess_images(images, fixscale):
 
     batch, channels, width, height = images.shape
     images = torch.Tensor.numpy(images)
-    #images = images.astype(np.float32)
-    #images = images/255.0
-    images = (images/255.0)*fixscale
-    images = images.astype(np.int8)
+    #images = (images/255.0)*fixscale
+    #images = images.astype(np.int8)
+    images = np.right_shift(images, 1)
     images = np.transpose(images, (0, 2, 3, 1)) # Rearrange the columns of input in the appropriate form. From [1, 3, 640, 640] --> [1, 640, 640, 3]
 
     return images, batch, channels, width, height
@@ -153,17 +152,18 @@ def runThread_funct(id, dpu_runner, dataloader):
         # Inference
         with dt[1]: 
             dpu_execute_async(dpu_runner, input_data, output_data)
-            # Rearrange the columns of outputs in the appropriate form. 
-            #  [1, 80, 80, 21] --> [1, 21, 80, 80]
-            #  [1, 40, 40, 21] --> [1, 21, 40, 40]
-            #  [1, 20, 20, 21] --> [1, 21, 20, 20]
-            outputs = [torch.Tensor(np.transpose(output1_scale*output_data[0], (0, 3, 1, 2))), torch.Tensor(np.transpose(output2_scale*output_data[1], (0, 3, 1, 2))), torch.Tensor(np.transpose(output3_scale*output_data[2], (0, 3, 1, 2)))]
-            preds = postprocessing(outputs)
-
+            
+        # Rearrange the columns of outputs in the appropriate form. 
+        #  [1, 80, 80, 21] --> [1, 21, 80, 80]
+        #  [1, 40, 40, 21] --> [1, 21, 40, 40]
+        #  [1, 20, 20, 21] --> [1, 21, 20, 20]    
+        outputs = [torch.Tensor(np.transpose(output1_scale*output_data[0], (0, 3, 1, 2))), torch.Tensor(np.transpose(output2_scale*output_data[1], (0, 3, 1, 2))), torch.Tensor(np.transpose(output3_scale*output_data[2], (0, 3, 1, 2)))]
+        preds = postprocessing(outputs)
+        targets[:, 2:] *= torch.tensor((width, height, width, height), device=device)  # to pixels
+        lb = []  # for autolabelling
+        
         # Postprocessing
         with dt[2]:
-            targets[:, 2:] *= torch.tensor((width, height, width, height), device=device)  # to pixels
-            lb = []  # for autolabelling
             preds = non_max_suppression(preds, conf_thres=0.3, iou_thres=0.5, labels=lb)
         
         # Metrics
