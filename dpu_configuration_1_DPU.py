@@ -124,13 +124,13 @@ def run_on_DPU(dpu_runner, dataloader):
         # Inference
         with dt[1]:
             dpu_execute_async(dpu_runner, input_data, output_data)
-            # Rearrange the columns of outputs in the appropriate form. 
-            #  [1, 80, 80, 21] --> [1, 21, 80, 80]
-            #  [1, 40, 40, 21] --> [1, 21, 40, 40]
-            #  [1, 20, 20, 21] --> [1, 21, 20, 20]
-            outputs = [torch.Tensor(np.transpose(output1_scale*output_data[0], (0, 3, 1, 2))), torch.Tensor(np.transpose(output2_scale*output_data[1], (0, 3, 1, 2))), torch.Tensor(np.transpose(output3_scale*output_data[2], (0, 3, 1, 2)))]
-            preds = postprocessing(outputs)
-
+            
+        # Rearrange the columns of outputs in the appropriate form. 
+        #  [1, 80, 80, 21] --> [1, 21, 80, 80]
+        #  [1, 40, 40, 21] --> [1, 21, 40, 40]
+        #  [1, 20, 20, 21] --> [1, 21, 20, 20]
+        outputs = [torch.Tensor(np.transpose(output1_scale*output_data[0], (0, 3, 1, 2))), torch.Tensor(np.transpose(output2_scale*output_data[1], (0, 3, 1, 2))), torch.Tensor(np.transpose(output3_scale*output_data[2], (0, 3, 1, 2)))]
+        preds = postprocessing(outputs)
         targets[:, 2:] *= torch.tensor((width, height, width, height), device=device)  # to pixels
         lb = []  # for autolabelling
         
