@@ -50,7 +50,7 @@ Inference on Raspberry Pi 3:
 
 ## Experimental Results
 
-Results indicate that acceleration on FPGA didn't provide satisfactory results, as it didn't exceed the performance of our PC.
+Results indicate that acceleration on FPGA provided a decent result as Inference times where 4 times better than the CPU ones. However, we get an increase in Pre-process and NMS times coming from the inability of the embedded arm processor, on the FPGA, to process the Pre-processing stage as effectively as the AMD Ryzen 3600X of our PC. 
 
 
 
