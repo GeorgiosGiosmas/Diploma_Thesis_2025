@@ -30,7 +30,7 @@ For inference on ZCU4 is deemed necessary to process our trained model according
 
 [Model's Graph](graph.png) contains the CPU and DPU subgraphs in which the Vitis AI Compiler split our model.
 
-Inference on ZCU4 is finally achieved using VART from Vitis AI by running either one of the two scripts [dpu_configuration.py](dpu_configuration.py) and [dpu_configuration_1_DPU.py](dpu_configuration_1_DPU.py). First we configure the FPGA by loading only one DPU(threads=1) and then by loading two DPUs(threads=2). The DPU architecture available for ZCU4 boards is a DPUCZDX8G DPU.
+Inference on ZCU4 is finally achieved using VART from Vitis AI by running either one of the two scripts [dpu_configuration.py](dpu_configuration.py) and [dpu_configuration_1_DPU.py](dpu_configuration_1_DPU.py). First we configure the FPGA by loading only one DPU(threads=1) and then by loading two DPUs(threads=2). The DPU architecture available for ZCU4 boards is a DPUCZDX8G(B4096) DPU.
 
 Performance on the validation dataset when run on the ZCU4:
 
