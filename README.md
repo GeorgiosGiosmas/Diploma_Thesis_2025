@@ -1,6 +1,6 @@
 # Diploma_Thesis_2025 - Georgios Giosmas
 
-## "AI ALGORITHMS’ HARDWARE ACCELERATION STUDY ON ARCHITECTURES BASED ON XILINX’ DPU PROCESSING MODULE"
+## "AI ALGORITHMS’ HARDWARE ACCELERATION STUDY FOR WIND TURBINE SURFACE DAMAGE DETECTION ON ARCHITECTURES BASED ON XILINX’S DPU PROCESSING MODULE"
 
 In this diploma thesis we examine a Computer Vision problem. We try to implement an algorithm for wind turbine surface damage detection and then accelerate it on an FPGA. Wind turbine surface damage detection is considered a high risk and high cost procedure as it is time consuming and exposes humans into difficult situations.  Solving the problem with Computer Vision techniques, like Convolutional Neural Networks, has been proven an efficient approach reducing time and achieving high accuracy.
 
